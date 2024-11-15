@@ -1,4 +1,4 @@
-export function Offer(): JSX.Element {
+export function Offer() {
   return (
     <div className="page">
       <header className="header">

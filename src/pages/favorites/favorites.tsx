@@ -1,4 +1,4 @@
-export function Favorites(): JSX.Element {
+export function Favorites(){
   return (
     <div className="page">
       <header className="header">

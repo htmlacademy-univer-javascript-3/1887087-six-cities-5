@@ -5,7 +5,7 @@ export type MainProps = {
   Places: PlaceProps[];
 }
 
-function Main(props: MainProps): JSX.Element {
+function Main(props: MainProps) {
   return(
     <div className="page page--gray page--main">
       <main className="page__main page__main--index">

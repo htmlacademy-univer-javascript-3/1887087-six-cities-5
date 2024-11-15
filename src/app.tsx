@@ -4,7 +4,7 @@ export type AppProps = {
   MainProps: MainProps;
 }
 
-export function App(props: AppProps): JSX.Element {
+export function App(props: AppProps) {
   return (
     <Main {...props.MainProps} />
   );
