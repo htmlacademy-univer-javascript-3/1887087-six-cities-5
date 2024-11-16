@@ -7,6 +7,7 @@ import {NotFound} from './pages/not-found/not-found.tsx';
 import {HelmetProvider} from 'react-helmet-async';
 import {PrivateRoute} from './components/private-route/privare-route.tsx';
 import {Favorites} from './pages/favorites/favorites.tsx';
+import {NavBar} from './components/nav-bar/nav-bar.tsx';
 
 export type AppProps = {
   MainProps: MainProps;
@@ -15,9 +16,10 @@ export type AppProps = {
 export function App(props: AppProps) {
   return (
     <HelmetProvider>
+      <NavBar/>
       <BrowserRouter>
         <Routes>
-          <Route
+          <Route index
             path={AppRoute.Main}
             element={<Main {...props.MainProps}/>}
           />

@@ -1,7 +1,12 @@
+import {Helmet} from 'react-helmet-async';
+import {AppName} from '../../consts.ts';
 
 export function Login() {
   return (
     <div className="page page--gray page--login">
+      <Helmet>
+        <title>{AppName}. Login</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
