@@ -1,4 +1,6 @@
 import {Place, PlaceProps} from '../../components/place/place.tsx';
+import {Helmet} from 'react-helmet-async';
+import {AppName} from '../../consts.ts';
 
 export type MainProps = {
   PlacesCount: number;
@@ -8,6 +10,9 @@ export type MainProps = {
 function Main(props: MainProps) {
   return(
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>{AppName}. Booking search</title>
+      </Helmet>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">

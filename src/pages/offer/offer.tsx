@@ -1,6 +1,12 @@
+import {Helmet} from 'react-helmet-async';
+import {AppName} from '../../consts.ts';
+
 export function Offer() {
   return (
     <div className="page">
+      <Helmet>
+        <title>{AppName}. Offer</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
