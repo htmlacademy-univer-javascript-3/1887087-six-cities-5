@@ -1,13 +1,13 @@
-import {Place, PlaceProps} from '../../components/place/place.tsx';
 import {Helmet} from 'react-helmet-async';
 import {AppName} from '../../consts.ts';
+import {OfferCardList, OfferListProps} from '../../components/offers/offer-card-list.tsx';
 
 export type MainProps = {
   PlacesCount: number;
-  Places: PlaceProps[];
+  Offers: OfferListProps;
 }
 
-function Main(props: MainProps) {
+export function Main(props: MainProps) {
   return(
     <div className="page page--gray page--main">
       <Helmet>
@@ -82,10 +82,7 @@ function Main(props: MainProps) {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {/* eslint-disable-next-line react/jsx-key */}
-                {props.Places.map(((place) => <Place {...place} />))}
-              </div>
+              <OfferCardList {...props.Offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"/>
@@ -97,5 +94,3 @@ function Main(props: MainProps) {
 
   );
 }
-
-export default Main;

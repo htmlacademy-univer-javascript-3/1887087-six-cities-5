@@ -1,18 +1,22 @@
-import {PlaceProps} from '../components/place/place.tsx';
-import {PlaceType} from '../components/place/placeType.tsx';
+import {OfferProps} from '../components/offers/offer-card.tsx';
+import {PlaceType} from '../components/offers/placeType.ts';
 
-export const placesMocks : PlaceProps[] = [
+export const offerProps : OfferProps[] = [
   {
+    Id: '1',
     Name: 'Beautiful & luxurious apartment at great location',
+    City: 'Amsterdam',
     CostPerNight: 120,
     Type: PlaceType.Apartment,
     Rating: 80,
     Image: 'img/apartment-01.jpg',
-    InBookmarks: false,
+    InBookmarks: true,
     IsPremium: true,
   },
   {
-    Name: 'Wood and stone place',
+    Id: '2',
+    Name: 'Wood and stone offers',
+    City: 'Amsterdam',
     CostPerNight: 80,
     Type: PlaceType.Room,
     Rating: 80,
@@ -21,7 +25,9 @@ export const placesMocks : PlaceProps[] = [
     IsPremium: false,
   },
   {
+    Id: '3',
     Name: 'Canal View Prinsengracht',
+    City: 'Amsterdam',
     CostPerNight: 132,
     Type: PlaceType.Apartment,
     Rating: 80,
@@ -30,12 +36,25 @@ export const placesMocks : PlaceProps[] = [
     IsPremium: false,
   },
   {
+    Id: '4',
     Name: 'Nice, cozy, warm big bed apartment',
+    City: 'Amsterdam',
     CostPerNight: 180,
     Type: PlaceType.Apartment,
     Rating: 100,
     Image: 'img/apartment-03.jpg',
     InBookmarks: false,
     IsPremium: true,
+  },
+  {
+    Id: '5',
+    Name: 'White castle',
+    City: 'Cologne',
+    CostPerNight: 180,
+    Type: PlaceType.Apartment,
+    Rating: 100,
+    Image: 'img/apartment-03.jpg',
+    InBookmarks: true,
+    IsPremium: false,
   },
 ];
