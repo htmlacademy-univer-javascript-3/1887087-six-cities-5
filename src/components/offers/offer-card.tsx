@@ -1,8 +1,15 @@
-import {PlaceType} from './placeType.tsx';
+import {PlaceType} from './placeType.ts';
+import {Premium} from './premium.tsx';
+import {useNavigate} from 'react-router-dom';
+import {AppRoute} from '../../consts.ts';
 
-export type PlaceProps = {
+export type OfferProps = {
+  // eslint-disable-next-line react/no-unused-prop-types
+  Id: string;
   CostPerNight: number;
   Name: string;
+  // eslint-disable-next-line react/no-unused-prop-types
+  City: string;
   Type: PlaceType;
   Rating: number;
   Image: string;
@@ -10,23 +17,14 @@ export type PlaceProps = {
   IsPremium: boolean;
 };
 
-function Premium(premiumInfo: {isPremium: boolean}) {
-  if (!premiumInfo.isPremium){
-    return null;
-  }
-  return (
-    <div className="place-card__mark">
-      <span>Premium</span>
-    </div>
-  );
-}
 
-export function Place(props: PlaceProps) {
+export function OfferCard(props: OfferProps) {
+  const navigate = useNavigate();
   return (
-    <article className="cities__card place-card">
-      <Premium isPremium={props.IsPremium}/>
+    <article className="cities__card place-card" onClick={() => navigate(`${AppRoute.Offer}`)}>
+      {props.IsPremium ? <Premium/> : null}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <a onClick={() => navigate(AppRoute.Offer)}>
           <img
             className="place-card__image"
             src={props.Image}
@@ -48,11 +46,7 @@ export function Place(props: PlaceProps) {
             className={`place-card__bookmark-button button ${props.InBookmarks ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
           >
-            <svg
-              className="place-card__bookmark-icon"
-              width={18}
-              height={19}
-            >
+            <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark"/>
             </svg>
             <span className="visually-hidden">In bookmarks</span>
@@ -64,8 +58,8 @@ export function Place(props: PlaceProps) {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <a href="#">{props.Name}</a>
+        <h2 className="place-card__name" onClick={() => navigate(AppRoute.Offer)}>
+          <a>{props.Name}</a>
         </h2>
         <p className="place-card__type">{props.Type}</p>
       </div>

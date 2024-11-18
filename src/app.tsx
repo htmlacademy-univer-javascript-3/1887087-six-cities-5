@@ -1,4 +1,4 @@
-import Main, {MainProps} from './pages/main/main.tsx';
+import {Main, MainProps} from './pages/main/main.tsx';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from './consts.ts';
 import {Login} from './pages/login/login.tsx';
@@ -6,11 +6,12 @@ import {Offer} from './pages/offer/offer.tsx';
 import {NotFound} from './pages/not-found/not-found.tsx';
 import {HelmetProvider} from 'react-helmet-async';
 import {PrivateRoute} from './components/private-route/privare-route.tsx';
-import {Favorites} from './pages/favorites/favorites.tsx';
+import {Favorites, FavoritesProps} from './pages/favorites/favorites.tsx';
 import {NavBar} from './components/nav-bar/nav-bar.tsx';
 
 export type AppProps = {
   MainProps: MainProps;
+  FavoritesProps: FavoritesProps;
 }
 
 export function App(props: AppProps) {
@@ -30,8 +31,8 @@ export function App(props: AppProps) {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth} >
-                <Favorites/>
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth} >
+                <Favorites {...props.FavoritesProps}/>
               </PrivateRoute>
             }
           />
