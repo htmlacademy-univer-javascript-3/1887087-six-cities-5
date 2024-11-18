@@ -18,8 +18,8 @@ type AppProps = {
 export function App(props: AppProps) {
   return (
     <HelmetProvider>
-      <NavBar/>
       <BrowserRouter>
+        <NavBar/>
         <Routes>
           <Route index
             path={AppRoute.Main}

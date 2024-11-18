@@ -1,10 +1,9 @@
-import {OfferCard} from '../offers/offer-card.tsx';
 import {GroupBy} from '../../helpers/helpers.ts';
-import {FavoriteOfferCard} from './favorite-offer-card.tsx';
-import {ComponentProps} from 'react';
+import {Offer, OfferCard} from '../offers/card/offer-card.tsx';
+import {OfferCardType} from '../offers/card/offer-card-styles.ts';
 
 type FavoritesOfferCardListProps = {
-  Offers: ComponentProps<typeof OfferCard>[];
+  Offers: Offer[];
 }
 
 export function FavoritesOfferCardList(props: FavoritesOfferCardListProps) {
@@ -24,7 +23,14 @@ export function FavoritesOfferCardList(props: FavoritesOfferCardListProps) {
             </div>
           </div>
           <div className="favorites__places">
-            {cityGroups.get(cityName)?.map((city) => <FavoriteOfferCard {...city} key={city.Id}/>)}
+            {cityGroups.get(cityName)?.map((city) =>
+              (
+                <OfferCard
+                  Offer={{...city}}
+                  OfferCardType={OfferCardType.FavoritesPage}
+                  key={city.Id}
+                />
+              ))}
           </div>
         </li>
       ))}

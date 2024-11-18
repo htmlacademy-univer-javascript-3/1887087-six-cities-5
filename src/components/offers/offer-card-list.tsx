@@ -1,8 +1,9 @@
-import {OfferCard} from './offer-card.tsx';
-import {ComponentProps, useState} from 'react';
+import {Offer, OfferCard} from './card/offer-card.tsx';
+import {useState} from 'react';
+import {OfferCardType} from './card/offer-card-styles.ts';
 
 type OfferListProps = {
-  Offers: ComponentProps<typeof OfferCard>[];
+  Offers: Offer[];
 };
 
 export function OfferCardList(props: OfferListProps) {
@@ -10,7 +11,7 @@ export function OfferCardList(props: OfferListProps) {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {props.Offers.map(((offer) =>
+      {props.Offers.map((offer) =>
         (
           <span
             key={offer.Id}
@@ -21,10 +22,10 @@ export function OfferCardList(props: OfferListProps) {
               setActiveCardId(null);
             }}
           >
-            <OfferCard {...offer} />
+            <OfferCard Offer={offer} OfferCardType={OfferCardType.MainPage}/>
           </span>
         )
-      ))}
+      )}
     </div>
   );
 }

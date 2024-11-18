@@ -1,10 +1,11 @@
 import {Helmet} from 'react-helmet-async';
 import {AppName} from '../../consts.ts';
-import {OfferCardList, OfferListProps} from '../../components/offers/offer-card-list.tsx';
+import {OfferCardList} from '../../components/offers/offer-card-list.tsx';
+import {ComponentProps} from 'react';
 
 type MainProps = {
   PlacesCount: number;
-  Offers: OfferListProps;
+  Offers: ComponentProps<typeof OfferCardList>;
 }
 
 export function Main(props: MainProps) {
