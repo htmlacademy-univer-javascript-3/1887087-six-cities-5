@@ -2,7 +2,7 @@ import {Helmet} from 'react-helmet-async';
 import {AppName} from '../../consts.ts';
 import {OfferCardList, OfferListProps} from '../../components/offers/offer-card-list.tsx';
 
-export type MainProps = {
+type MainProps = {
   PlacesCount: number;
   Offers: OfferListProps;
 }

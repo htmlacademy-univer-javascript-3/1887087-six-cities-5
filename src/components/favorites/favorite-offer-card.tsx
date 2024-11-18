@@ -1,10 +1,11 @@
-import {OfferProps} from '../offers/offer-card.tsx';
+import {OfferCard} from '../offers/offer-card.tsx';
 import {Premium} from '../offers/premium.tsx';
 import {AppRoute} from '../../consts.ts';
 import {useNavigate} from 'react-router-dom';
+import {ComponentProps} from 'react';
 
 
-export function FavoriteOfferCard(props: OfferProps) {
+export function FavoriteOfferCard(props: ComponentProps<typeof OfferCard>) {
   const navigate = useNavigate();
 
   return (

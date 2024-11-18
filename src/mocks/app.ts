@@ -1,8 +1,9 @@
-import {AppProps} from '../app.tsx';
+import {App,} from '../app.tsx';
 import {offerProps} from './offers.ts';
-import {OfferProps} from '../components/offers/offer-card.tsx';
+import {ComponentProps} from 'react';
+import {OfferCard} from '../components/offers/offer-card.tsx';
 
-export const appMocks : AppProps = {
+export const appMocks : ComponentProps<typeof App> = {
   MainProps:
     {
       Offers: {Offers: offerProps},
@@ -10,6 +11,6 @@ export const appMocks : AppProps = {
     },
   FavoritesProps:
     {
-      Offers: offerProps.filter((offer: OfferProps) => offer.InBookmarks),
+      Offers: offerProps.filter((offer: ComponentProps<typeof OfferCard>) => offer.InBookmarks),
     }
 };

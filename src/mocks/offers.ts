@@ -1,7 +1,8 @@
-import {OfferProps} from '../components/offers/offer-card.tsx';
 import {PlaceType} from '../components/offers/placeType.ts';
+import {ComponentProps} from 'react';
+import {OfferCard} from '../components/offers/offer-card.tsx';
 
-export const offerProps : OfferProps[] = [
+export const offerProps : ComponentProps<typeof OfferCard>[] = [
   {
     Id: '1',
     Name: 'Beautiful & luxurious apartment at great location',

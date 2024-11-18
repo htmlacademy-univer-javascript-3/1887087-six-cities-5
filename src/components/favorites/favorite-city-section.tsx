@@ -1,9 +1,10 @@
-import {OfferProps} from '../offers/offer-card.tsx';
+import {OfferCard} from '../offers/offer-card.tsx';
 import {GroupBy} from '../../helpers/helpers.ts';
 import {FavoriteOfferCard} from './favorite-offer-card.tsx';
+import {ComponentProps} from 'react';
 
-export type FavoritesOfferCardListProps = {
-  Offers: OfferProps[];
+type FavoritesOfferCardListProps = {
+  Offers: ComponentProps<typeof OfferCard>[];
 }
 
 export function FavoritesOfferCardList(props: FavoritesOfferCardListProps) {

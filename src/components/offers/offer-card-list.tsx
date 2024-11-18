@@ -1,8 +1,8 @@
-import {OfferCard, OfferProps} from './offer-card.tsx';
-import {useState} from 'react';
+import {OfferCard} from './offer-card.tsx';
+import {ComponentProps, useState} from 'react';
 
-export type OfferListProps = {
-  Offers:OfferProps[];
+type OfferListProps = {
+  Offers: ComponentProps<typeof OfferCard>[];
 };
 
 export function OfferCardList(props: OfferListProps) {

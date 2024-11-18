@@ -3,7 +3,7 @@ import {Premium} from './premium.tsx';
 import {useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../consts.ts';
 
-export type OfferProps = {
+type OfferProps = {
   // eslint-disable-next-line react/no-unused-prop-types
   Id: string;
   CostPerNight: number;
