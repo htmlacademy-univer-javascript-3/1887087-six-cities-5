@@ -1,13 +1,19 @@
 import {Helmet} from 'react-helmet-async';
 import {AppName} from '../../consts.ts';
-import {OfferCardList, OfferListProps} from '../../components/offers/offer-card-list.tsx';
+import {OfferCardList} from '../../components/offers/offer-card-list.tsx';
+import {ComponentProps, useState} from 'react';
+import Map from '../../components/map/map.tsx';
+import {City} from '../../types/city.ts';
+import {amsterdam} from '../../mocks/cities.ts';
 
-export type MainProps = {
+type MainProps = {
   PlacesCount: number;
-  Offers: OfferListProps;
+  Offers: ComponentProps<typeof OfferCardList>;
 }
 
 export function Main(props: MainProps) {
+  const [currentCity, ] = useState<City>(amsterdam);
+
   return(
     <div className="page page--gray page--main">
       <Helmet>
@@ -85,7 +91,8 @@ export function Main(props: MainProps) {
               <OfferCardList {...props.Offers}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"/>
+              <section className=""/>
+              <Map city={currentCity} offers={props.Offers.Offers} selectedOffer={undefined}/>
             </div>
           </div>
         </div>

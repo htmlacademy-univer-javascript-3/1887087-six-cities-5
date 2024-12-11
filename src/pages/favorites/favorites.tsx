@@ -1,8 +1,8 @@
-import {OfferProps} from '../../components/offers/offer-card.tsx';
 import {FavoritesOfferCardList} from '../../components/favorites/favorite-city-section.tsx';
+import {Offer} from '../../components/offers/card/offer-card.tsx';
 
-export type FavoritesProps = {
-  Offers: OfferProps[];
+type FavoritesProps = {
+  Offers: Offer[];
 }
 
 export function Favorites(props: FavoritesProps) {

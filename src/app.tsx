@@ -1,4 +1,4 @@
-import {Main, MainProps} from './pages/main/main.tsx';
+import {Main} from './pages/main/main.tsx';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from './consts.ts';
 import {Login} from './pages/login/login.tsx';
@@ -6,19 +6,20 @@ import {Offer} from './pages/offer/offer.tsx';
 import {NotFound} from './pages/not-found/not-found.tsx';
 import {HelmetProvider} from 'react-helmet-async';
 import {PrivateRoute} from './components/private-route/privare-route.tsx';
-import {Favorites, FavoritesProps} from './pages/favorites/favorites.tsx';
+import {Favorites} from './pages/favorites/favorites.tsx';
 import {NavBar} from './components/nav-bar/nav-bar.tsx';
+import {ComponentProps} from 'react';
 
-export type AppProps = {
-  MainProps: MainProps;
-  FavoritesProps: FavoritesProps;
+type AppProps = {
+  MainProps: ComponentProps<typeof Main>;
+  FavoritesProps: ComponentProps<typeof Favorites>;
 }
 
 export function App(props: AppProps) {
   return (
     <HelmetProvider>
-      <NavBar/>
       <BrowserRouter>
+        <NavBar/>
         <Routes>
           <Route index
             path={AppRoute.Main}
