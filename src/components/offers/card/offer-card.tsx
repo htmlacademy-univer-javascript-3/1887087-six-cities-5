@@ -1,23 +1,10 @@
-import {PlaceType} from './place-type.ts';
 import {Premium} from './premium.tsx';
 import {useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../../consts.ts';
 import clsx from 'clsx';
 import {offerCardStyles, OfferCardType} from './offer-card-styles.ts';
+import {Offer} from '../../../types/offer.ts';
 
-export type Offer = {
-  // eslint-disable-next-line react/no-unused-prop-types
-  Id: string;
-  CostPerNight: number;
-  Name: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  City: string;
-  Type: PlaceType;
-  Rating: number;
-  Image: string;
-  InBookmarks: boolean;
-  IsPremium: boolean;
-};
 
 type OfferCardProps = {
   Offer: Offer;

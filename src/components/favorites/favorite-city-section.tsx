@@ -1,9 +1,10 @@
 import {GroupBy} from '../../helpers/helpers.ts';
-import {Offer, OfferCard} from '../offers/card/offer-card.tsx';
 import {OfferCardType} from '../offers/card/offer-card-styles.ts';
+import {Offers} from '../../types/offer.ts';
+import {OfferCard} from '../offers/card/offer-card.tsx';
 
 type FavoritesOfferCardListProps = {
-  Offers: Offer[];
+  Offers: Offers;
 }
 
 export function FavoritesOfferCardList(props: FavoritesOfferCardListProps) {
@@ -14,11 +15,11 @@ export function FavoritesOfferCardList(props: FavoritesOfferCardListProps) {
   return (
     <ul className="favorites__list">
       {cities.map((cityName) => (
-        <li className="favorites__locations-items" key={cityName}>
+        <li className="favorites__locations-items" key={cityName.Name}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{cityName}</span>
+                <span>{cityName.Name}</span>
               </a>
             </div>
           </div>

@@ -1,9 +1,10 @@
-import {Offer, OfferCard} from './card/offer-card.tsx';
+import {OfferCard} from './card/offer-card.tsx';
 import {useState} from 'react';
 import {OfferCardType} from './card/offer-card-styles.ts';
+import {Offers} from '../../types/offer.ts';
 
 type OfferListProps = {
-  Offers: Offer[];
+  Offers: Offers;
 };
 
 export function OfferCardList(props: OfferListProps) {
