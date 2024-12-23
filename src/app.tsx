@@ -27,19 +27,19 @@ export function App(props: AppProps) {
           />
           <Route
             path={AppRoute.Login}
-            element={<Login />}
+            element={<Login/>}
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth} >
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
                 <Favorites {...props.FavoritesProps}/>
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Offer}
-            element={<Offer />}
+            element={<Offer/>}
           />
           <Route
             path={'/*'}

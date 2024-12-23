@@ -3,8 +3,8 @@ import {latLng} from 'leaflet';
 
 export const amsterdam: City = {
   Name: 'Amsterdam',
-  LatLng: latLng(52.377956, 4.897070),
-  Zoom: 10
+  LatLng: latLng(52.35514938496378, 4.673877537499948),
+  Zoom: 8
 };
 
 export const cologne: City = {
