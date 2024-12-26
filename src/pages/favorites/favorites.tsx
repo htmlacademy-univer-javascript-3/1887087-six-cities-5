@@ -1,8 +1,8 @@
 import {FavoritesOfferCardList} from '../../components/favorites/favorite-city-section.tsx';
-import {Offer} from '../../components/offers/card/offer-card.tsx';
+import {Offers} from '../../types/offer.ts';
 
 type FavoritesProps = {
-  Offers: Offer[];
+  Offers: Offers;
 }
 
 export function Favorites(props: FavoritesProps) {

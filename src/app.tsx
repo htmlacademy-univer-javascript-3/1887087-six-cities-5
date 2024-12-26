@@ -9,6 +9,8 @@ import {PrivateRoute} from './components/private-route/privare-route.tsx';
 import {Favorites} from './pages/favorites/favorites.tsx';
 import {NavBar} from './components/nav-bar/nav-bar.tsx';
 import {ComponentProps} from 'react';
+import {Provider} from 'react-redux';
+import {store} from './store';
 
 type AppProps = {
   MainProps: ComponentProps<typeof Main>;
@@ -17,36 +19,38 @@ type AppProps = {
 
 export function App(props: AppProps) {
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <NavBar/>
-        <Routes>
-          <Route index
-            path={AppRoute.Main}
-            element={<Main {...props.MainProps}/>}
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<Login/>}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <Favorites {...props.FavoritesProps}/>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Offer}
-            element={<Offer/>}
-          />
-          <Route
-            path={'/*'}
-            element={<NotFound/>}
-          />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+    <Provider store={store}>
+      <HelmetProvider>
+        <BrowserRouter>
+          <NavBar/>
+          <Routes>
+            <Route index
+              path={AppRoute.Main}
+              element={<Main/>}
+            />
+            <Route
+              path={AppRoute.Login}
+              element={<Login/>}
+            />
+            <Route
+              path={AppRoute.Favorites}
+              element={
+                <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                  <Favorites {...props.FavoritesProps}/>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={AppRoute.Offer}
+              element={<Offer/>}
+            />
+            <Route
+              path={'/*'}
+              element={<NotFound/>}
+            />
+          </Routes>
+        </BrowserRouter>
+      </HelmetProvider>
+    </Provider>
   );
 }

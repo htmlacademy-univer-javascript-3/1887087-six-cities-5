@@ -22,7 +22,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40],
 });
 
-export function Map(props: MapProps): JSX.Element {
+export function Map(props: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, props.City);
   useEffect(() => {

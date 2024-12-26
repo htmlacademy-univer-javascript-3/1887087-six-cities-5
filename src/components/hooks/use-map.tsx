@@ -29,5 +29,15 @@ export function useMap(
       isRenderedRef.current = true;
     }
   }, [mapRef, city]);
+
+  useEffect(() => {
+    if (map) {
+      map.setView(
+        [city.LatLng.lat, city.LatLng.lng],
+        city.Zoom
+      );
+    }
+  }, [map, city]);
+
   return map;
 }
