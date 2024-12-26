@@ -1,56 +1,50 @@
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../consts.ts';
-import {City} from '../../types/city.ts';
+import { useRef, useEffect } from 'react';
+import { Icon, Marker, layerGroup } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import {Offer, Offers} from '../../types/offer.ts';
-import {Icon, layerGroup, Marker} from 'leaflet';
-import {useEffect, useRef} from 'react';
-import useMap from '../hooks/use-map.tsx';
+import {City} from '../../types/city.ts';
+import {useMap} from '../hooks/use-map.tsx';
 
 type MapProps = {
-  city: City;
-  offers: Offers;
-  selectedOffer: Offer | undefined;
-};
+  City: City;
+  Offers: Offers;
+  SelectedOffer: Offer | undefined;
+}
 
 const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: 'img/pin.svg',
   iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconAnchor: [20, 40],
 });
-
 const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
+  iconUrl: 'img/pin-active.svg',
   iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconAnchor: [20, 40],
 });
 
-function Map(props: MapProps): JSX.Element {
-  const {city, offers, selectedOffer} = props;
-
+export function Map(props: MapProps) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
-
+  const map = useMap(mapRef, props.City);
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      offers.forEach((offer) => {
-        const marker = new Marker(offer.LatLng);
-
+      props.Offers.forEach((offer) => {
+        const marker = new Marker({
+          lat: offer.LatLng.lat,
+          lng: offer.LatLng.lng,
+        });
         marker
           .setIcon(
-            selectedOffer !== undefined && offer.Name === selectedOffer.Name
+            props.SelectedOffer !== undefined && offer.Id === props.SelectedOffer.Id
               ? currentCustomIcon
-              : defaultCustomIcon
+              : defaultCustomIcon,
           )
           .addTo(markerLayer);
       });
-
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
-
-  return <div style={{height: '500px'}} ref={mapRef}></div>;
+  }, [map, props.Offers, props.SelectedOffer]);
+  return <section className="cities__map map" ref={mapRef}></section>;
 }
-
-export default Map;
