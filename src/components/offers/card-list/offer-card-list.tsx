@@ -1,15 +1,13 @@
-import {OfferCard} from './card/offer-card.tsx';
-import {useState} from 'react';
-import {OfferCardType} from './card/offer-card-styles.ts';
-import {Offers} from '../../types/offer.ts';
+import {OfferCard} from '../card/offer-card.tsx';
+import {OfferCardType} from '../card/offer-card-styles.ts';
+import {Offer, Offers} from '../../../types/offer.ts';
 
 type OfferListProps = {
   Offers: Offers;
+  OnActiveOfferChange: (offer: Offer|null) => void;
 };
 
 export function OfferCardList(props: OfferListProps) {
-  const [, setActiveCardId] = useState<string|null>(null);
-
   return (
     <div className="cities__places-list places__list tabs__content">
       {props.Offers.map((offer) =>
@@ -17,10 +15,10 @@ export function OfferCardList(props: OfferListProps) {
           <span
             key={offer.Id}
             onMouseEnter={() => {
-              setActiveCardId(offer.Id);
+              props.OnActiveOfferChange(offer);
             }}
             onMouseLeave={() => {
-              setActiveCardId(null);
+              props.OnActiveOfferChange(null);
             }}
           >
             <OfferCard Offer={offer} OfferCardType={OfferCardType.MainPage}/>

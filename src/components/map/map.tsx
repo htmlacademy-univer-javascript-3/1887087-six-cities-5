@@ -8,7 +8,7 @@ import {useMap} from '../hooks/use-map.tsx';
 type MapProps = {
   City: City;
   Offers: Offers;
-  SelectedOffer: Offer | undefined;
+  ActiveOffer: Offer | null;
 }
 
 const defaultCustomIcon = new Icon({
@@ -16,6 +16,7 @@ const defaultCustomIcon = new Icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
+
 const currentCustomIcon = new Icon({
   iconUrl: 'img/pin-active.svg',
   iconSize: [40, 40],
@@ -35,7 +36,7 @@ export function Map(props: MapProps) {
         });
         marker
           .setIcon(
-            props.SelectedOffer !== undefined && offer.Id === props.SelectedOffer.Id
+            props.ActiveOffer !== null && offer.Id === props.ActiveOffer.Id
               ? currentCustomIcon
               : defaultCustomIcon,
           )
@@ -45,6 +46,6 @@ export function Map(props: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, props.Offers, props.SelectedOffer]);
+  }, [map, props.Offers, props.ActiveOffer]);
   return <section className="cities__map map" ref={mapRef}></section>;
 }
