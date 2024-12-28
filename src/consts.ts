@@ -60,3 +60,17 @@ export const AllCities: City[] = [
 ];
 
 export const DefaultCity: City = AllCities[0];
+
+export enum SortOptions {
+  Popular = 0,
+  PriceLowToHigh = 1,
+  PriceHighToLow = 2,
+  TopRatedFirst = 3,
+}
+
+export const SortOptionTitles : Record<SortOptions, string> = {
+  [SortOptions.Popular]: 'Popular',
+  [SortOptions.PriceLowToHigh]: 'Price: low to high',
+  [SortOptions.PriceHighToLow]: 'Price: high to low',
+  [SortOptions.TopRatedFirst]: 'Top rated first',
+};
