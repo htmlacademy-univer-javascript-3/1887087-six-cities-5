@@ -31,12 +31,12 @@ export function Map(props: MapProps) {
       const markerLayer = layerGroup().addTo(map);
       props.Offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.LatLng.lat,
-          lng: offer.LatLng.lng,
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
         });
         marker
           .setIcon(
-            props.ActiveOffer !== null && offer.Id === props.ActiveOffer.Id
+            props.ActiveOffer !== null && offer.id === props.ActiveOffer.id
               ? currentCustomIcon
               : defaultCustomIcon,
           )
