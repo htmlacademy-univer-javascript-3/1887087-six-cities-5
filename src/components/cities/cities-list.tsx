@@ -1,7 +1,7 @@
 import {AllCities} from '../../consts.ts';
 import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
 import clsx from 'clsx';
-import {changeCity} from '../../store/action.ts';
+import {changeCity} from '../../store/actions.ts';
 
 
 export function CitiesList(){
@@ -13,12 +13,12 @@ export function CitiesList(){
       <ul className="locations__list tabs__list">
         {AllCities.map((city) =>
           (
-            <li className="locations__item" key={city.Name}>
+            <li className="locations__item" key={city.name}>
               <a
-                className={clsx('locations__item-link', 'tabs__item', currentCity.Name === city.Name && 'tabs__item--active')}
+                className={clsx('locations__item-link', 'tabs__item', currentCity.name === city.name && 'tabs__item--active')}
                 onClick={() => dispatch(changeCity(city))}
               >
-                <span>{city.Name}</span>
+                <span>{city.name}</span>
               </a>
             </li>
           )

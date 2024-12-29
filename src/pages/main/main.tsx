@@ -8,6 +8,7 @@ import {OfferSortDropdown} from '../../components/offers/sort/offer-sort-dropdow
 import {OfferCardList} from '../../components/offers/card-list/offer-card-list.tsx';
 import {OfferSortCompareFunctions} from '../../components/offers/sort/offer-sort.ts';
 import {Offer} from '../../types/offer.ts';
+import {NavBar} from '../../components/nav-bar/nav-bar.tsx';
 
 export function Main() {
   const [offerSortOptions, setOfferSortOptions] = useState<SortOptions>(SortOptions.Popular);
@@ -15,33 +16,36 @@ export function Main() {
 
   const currentCity = useAppSelector((store) => store.City);
   const sortedOffers = useAppSelector((store) => store.Offers)
-    .filter((offer) => offer.City.Name === currentCity.Name)
+    .filter((offer) => offer.city.name === currentCity.name)
     .toSorted(OfferSortCompareFunctions[offerSortOptions]);
 
   return(
-    <div className="page page--gray page--main">
-      <Helmet>
-        <title>{AppName}. Booking search</title>
-      </Helmet>
-      <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <CitiesList></CitiesList>
-        </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortedOffers.length} places to stay in {currentCity.Name}</b>
-              <OfferSortDropdown SortOption={offerSortOptions} OnSortOptionChange={setOfferSortOptions}/>
-              <OfferCardList Offers={sortedOffers} OnActiveOfferChange={setActiveOffer}/>
-            </section>
-            <div className="cities__right-section">
-              <Map City={currentCity} Offers={sortedOffers} ActiveOffer={activeOffer} />
+    <>
+      <NavBar/>
+      <div className="page page--gray page--main">
+        <Helmet>
+          <title>{AppName}. Booking search</title>
+        </Helmet>
+        <main className="page__main page__main--index">
+          <h1 className="visually-hidden">Cities</h1>
+          <div className="tabs">
+            <CitiesList></CitiesList>
+          </div>
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{sortedOffers.length} places to stay in {currentCity.name}</b>
+                <OfferSortDropdown SortOption={offerSortOptions} OnSortOptionChange={setOfferSortOptions}/>
+                <OfferCardList Offers={sortedOffers} OnActiveOfferChange={setActiveOffer}/>
+              </section>
+              <div className="cities__right-section">
+                <Map City={currentCity} Offers={sortedOffers} ActiveOffer={activeOffer} />
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }

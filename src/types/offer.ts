@@ -1,20 +1,18 @@
 import {PlaceType} from '../components/offers/card/place-type.ts';
-import {LatLng} from 'leaflet';
 import {City} from './city.ts';
+import {Location} from './locatioin.ts';
 
 export type Offer = {
-  // eslint-disable-next-line react/no-unused-prop-types
-  Id: string;
-  CostPerNight: number;
-  Name: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  City: City;
-  Type: PlaceType;
-  Rating: number;
-  Image: string;
-  InBookmarks: boolean;
-  IsPremium: boolean;
-  LatLng: LatLng;
+  id: string;
+  price: number;
+  title: string;
+  city: City;
+  type: PlaceType;
+  rating: number;
+  previewImage: string;
+  isFavorite: boolean;
+  isPremium: boolean;
+  location: Location;
 };
 
 export type Offers = Offer[];

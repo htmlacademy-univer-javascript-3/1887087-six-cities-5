@@ -13,7 +13,7 @@ export function OfferCardList(props: OfferListProps) {
       {props.Offers.map((offer) =>
         (
           <span
-            key={offer.Id}
+            key={offer.id}
             onMouseEnter={() => {
               props.OnActiveOfferChange(offer);
             }}

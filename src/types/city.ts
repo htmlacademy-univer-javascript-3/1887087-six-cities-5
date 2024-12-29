@@ -1,9 +1,7 @@
-import {LatLng} from 'leaflet';
 import {CityName} from '../consts.ts';
-
+import {Location} from './locatioin.ts';
 
 export type City = {
-  Name: CityName;
-  LatLng: LatLng;
-  Zoom: number;
+  name: CityName;
+  location: Location;
 }

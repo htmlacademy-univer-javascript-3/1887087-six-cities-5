@@ -12,8 +12,8 @@ export function useMap(
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.LatLng.lat,
-          lng: city.LatLng.lng,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
         zoom: 10,
       });
@@ -33,8 +33,8 @@ export function useMap(
   useEffect(() => {
     if (map) {
       map.setView(
-        [city.LatLng.lat, city.LatLng.lng],
-        city.Zoom
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
       );
     }
   }, [map, city]);
