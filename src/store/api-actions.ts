@@ -21,3 +21,4 @@ export const fetchOffers = createAsyncThunk<void, undefined, {
     dispatch(setOffers(data));
   }
 );
+

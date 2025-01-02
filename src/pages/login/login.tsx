@@ -1,5 +1,6 @@
 import {Helmet} from 'react-helmet-async';
 import {AppName} from '../../consts.ts';
+import {LoginForm} from '../../components/login/login-form.tsx';
 
 export function Login() {
   return (
@@ -11,10 +12,10 @@ export function Login() {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <a className="header__logo-link" href="">
                 <img
                   className="header__logo"
-                  src="img/logo.svg"
+                  src="public/img/logo.svg"
                   alt="6 cities logo"
                   width={81}
                   height={41}
@@ -28,31 +29,7 @@ export function Login() {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
-              <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
-                <input
-                  className="login__input form__input"
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  required={false}
-                />
-              </div>
-              <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
-                <input
-                  className="login__input form__input"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  required={false}
-                />
-              </div>
-              <button className="login__submit form__submit button" type="submit">
-                Sign in
-              </button>
-            </form>
+            <LoginForm/>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
