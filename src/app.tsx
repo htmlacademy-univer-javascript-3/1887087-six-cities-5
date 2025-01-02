@@ -1,6 +1,6 @@
 import {Main} from './pages/main/main.tsx';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from './consts.ts';
+import {Route, Routes} from 'react-router-dom';
+import {AppRoute} from './consts.ts';
 import {Login} from './pages/login/login.tsx';
 import {Offer} from './pages/offer/offer.tsx';
 import {NotFound} from './pages/not-found/not-found.tsx';
@@ -9,6 +9,8 @@ import {PrivateRoute} from './components/private-route/privare-route.tsx';
 import {Favorites} from './pages/favorites/favorites.tsx';
 import {useAppSelector} from './store/hooks.ts';
 import {Loading} from './components/loading/Loading.tsx';
+import HistoryRouter from './components/route/history-router.tsx';
+import browserHistory from './browser-history.ts';
 
 export function App() {
   const isOfferLoaded = useAppSelector((store) => store.IsOfferDataLoaded);
@@ -19,7 +21,7 @@ export function App() {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route index
             path={AppRoute.Main}
@@ -32,7 +34,7 @@ export function App() {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute>
                 <Favorites />
               </PrivateRoute>
             }
@@ -46,7 +48,7 @@ export function App() {
             element={<NotFound/>}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
