@@ -1,7 +1,7 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../consts.ts';
 import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
-import {getAuthorizationStatus, getUserInfo} from '../../store/user/user.selectors.ts';
+import {getAuthorizationStatus, getFavoriteOffers, getUserInfo} from '../../store/user/user.selectors.ts';
 import {store} from '../../store';
 import {checkAuthorizationStatus, logout} from '../../store/auth-actions.ts';
 
@@ -12,6 +12,7 @@ export function NavBar(){
   const navigate = useNavigate();
   const userInfo = useAppSelector(getUserInfo);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   return (
     <div className="container">
@@ -25,11 +26,11 @@ export function NavBar(){
           <ul className="header__nav-list">
             {authorizationStatus === AuthorizationStatus.Auth &&
               <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="#">
+                <a className="header__nav-link header__nav-link--profile">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
                   <span className="header__user-name user__name">{userInfo?.email}</span>
-                  <span className="header__favorite-count">3</span>
+                  <span className="header__favorite-count" onClick={() => navigate(AppRoute.Favorites)}>{favoriteOffers.length}</span>
                 </a>
               </li>}
             {authorizationStatus === AuthorizationStatus.Auth &&

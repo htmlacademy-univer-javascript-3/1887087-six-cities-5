@@ -9,6 +9,7 @@ import {dropToken, saveToken} from '../services/token.ts';
 import {redirectToRoute} from './actions.ts';
 import {setUserInfo} from './user/user.slice.ts';
 import {setCity} from './offers/offers.slice.ts';
+import {fetchFavoriteOffers} from './api-actions.ts';
 
 export const checkAuthorizationStatus = createAsyncThunk<
   void,
@@ -21,6 +22,7 @@ export const checkAuthorizationStatus = createAsyncThunk<
 >('checkAuthorizationStatus', async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<UserInfo>(APIRoutes.Login);
   dispatch(setUserInfo(data));
+  dispatch(fetchFavoriteOffers());
 });
 
 export const login = createAsyncThunk<void, AuthRequest, {
@@ -35,6 +37,7 @@ export const login = createAsyncThunk<void, AuthRequest, {
     dispatch(setUserInfo(data));
     dispatch(redirectToRoute(AppRoute.Main));
     dispatch(checkAuthorizationStatus());
+    dispatch(fetchFavoriteOffers());
   }
 );
 

@@ -1,37 +1,37 @@
-import {GroupBy} from '../../helpers/helpers.ts';
 import {OfferCardType} from '../offers/card/offer-card-styles.ts';
-import {Offers} from '../../types/offer.ts';
 import {OfferCard} from '../offers/card/offer-card.tsx';
+import {useAppSelector} from '../../store/hooks.ts';
+import {getFavoriteOffers} from '../../store/user/user.selectors.ts';
+import {AllCities} from '../../consts.ts';
 
-type FavoritesOfferCardListProps = {
-  Offers: Offers;
-}
 
-export function FavoritesOfferCardList(props: FavoritesOfferCardListProps) {
-  const cityGroups = GroupBy(props.Offers, 'city');
-  const citiesSet = new Set(props.Offers.map((offer) => offer.city));
-  const cities = Array.from(citiesSet.values());
+export function FavoritesOfferCardList() {
+  const favoritesOffers = useAppSelector(getFavoriteOffers);
+  const cities = AllCities
+    .filter((city) => favoritesOffers.some((offer) => offer.city.name === city.name));
 
   return (
     <ul className="favorites__list">
-      {cities.map((cityName) => (
-        <li className="favorites__locations-items" key={cityName.name}>
+      {cities.map((city) => (
+        <li className="favorites__locations-items" key={city.name}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{cityName.name}</span>
+                <span>{city.name}</span>
               </a>
             </div>
           </div>
           <div className="favorites__places">
-            {cityGroups.get(cityName)?.map((city) =>
-              (
-                <OfferCard
-                  Offer={{...city}}
-                  OfferCardType={OfferCardType.Favorites}
-                  key={city.id}
-                />
-              ))}
+            {favoritesOffers
+              .filter((offer) => offer.city.name === city.name)
+              .map((offer) =>
+                (
+                  <OfferCard
+                    Offer={{...offer}}
+                    OfferCardType={OfferCardType.Favorites}
+                    key={offer.id}
+                  />
+                ))}
           </div>
         </li>
       ))}

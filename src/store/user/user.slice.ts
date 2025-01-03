@@ -4,6 +4,7 @@ import {AuthorizationStatus} from '../../consts.ts';
 import { StoreNamespace } from '../../types/store-namespace.ts';
 import { UserInfo } from '../../types/user-info.ts';
 import {checkAuthorizationStatus, login, logout} from '../auth-actions.ts';
+import { Offer } from '../../types/offer.ts';
 
 const initialState: UserState = {
   AuthorizationStatus: AuthorizationStatus.Unknown,
@@ -18,6 +19,23 @@ export const userProcess = createSlice({
   reducers: {
     setUserInfo: (state, action: PayloadAction<UserInfo | null>) => {
       state.UserInfo = action.payload;
+    },
+    setFavoriteOffers: (state, action: PayloadAction<Offer[]>) => {
+      state.FavoriteOffers = action.payload;
+    },
+    updateUserFavorites: (
+      state,
+      action: PayloadAction<{ editedOffer: Offer }>
+    ) => {
+      const { editedOffer } = action.payload;
+      const offerIndex = state.FavoriteOffers.findIndex(
+        (offer) => offer.id === editedOffer.id
+      );
+      if (offerIndex === -1) {
+        state.FavoriteOffers.push(editedOffer);
+      } else {
+        state.FavoriteOffers.splice(offerIndex, 1);
+      }
     },
   },
   extraReducers(builder) {
@@ -40,5 +58,5 @@ export const userProcess = createSlice({
   },
 });
 
-export const { setUserInfo } =
+export const { setUserInfo, setFavoriteOffers, updateUserFavorites } =
   userProcess.actions;

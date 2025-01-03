@@ -21,7 +21,17 @@ export const dataProcess = createSlice({
     },
     setOffers: (state, action: PayloadAction<Offers>) => {
       state.Offers = action.payload;
-    }
+    },
+    markAsFavorite(state, action: PayloadAction<string>) {
+      const id = action.payload;
+      const offerIndex = state.Offers.findIndex(
+        (offer) => offer.id === id
+      );
+      if (offerIndex !== -1) {
+        state.Offers[offerIndex].isFavorite = !state.Offers[offerIndex].isFavorite;
+      }
+    },
+
   },
   extraReducers(builder) {
     builder
@@ -37,4 +47,4 @@ export const dataProcess = createSlice({
   },
 });
 
-export const { setCity, setOffers } = dataProcess.actions;
+export const { setCity, setOffers, markAsFavorite } = dataProcess.actions;
