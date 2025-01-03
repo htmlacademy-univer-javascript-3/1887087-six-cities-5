@@ -13,3 +13,10 @@ export function GroupBy<T, K extends keyof T>(array: T[], key: K) {
   });
   return map;
 }
+
+export function WordCapitalize(word: string | undefined) {
+  if (!word) {
+    return word;
+  }
+  return word[0].toUpperCase() + word.substr(1).toLowerCase();
+}

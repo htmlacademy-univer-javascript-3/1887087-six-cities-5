@@ -1,32 +1,12 @@
-import {AuthorizationStatus, DefaultCity} from '../consts.ts';
-import {createReducer} from '@reduxjs/toolkit';
-import {setCity, setOffers, setOfferDataLoadingStatus, setAuthorizationStatus, setUserInfo} from './actions.ts';
-import {Offer} from '../types/offer.ts';
-import {Store} from '../types/state.ts';
+import { StoreNamespace } from '../types/store-namespace.ts';
+import {userProcess} from './user/user-reducer.ts';
+import {dataProcess} from './offers/offers-reducer.ts';
+import {singleOfferProcess} from './single-offer/single-offer-reducer.ts';
+import {combineReducers} from '@reduxjs/toolkit';
 
-const initialState: Store = {
-  AuthorizationStatus: AuthorizationStatus.Unknown,
-  City: DefaultCity,
-  Offers: new Array<Offer>(),
-  IsOfferDataLoaded: false,
-  UserInfo: null,
-};
 
-export const reducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(setCity, (state, action) => {
-      state.City = action.payload;
-    })
-    .addCase(setOffers, (state, action) => {
-      state.Offers = action.payload;
-    })
-    .addCase(setOfferDataLoadingStatus, (state, action) => {
-      state.IsOfferDataLoaded = action.payload;
-    })
-    .addCase(setAuthorizationStatus, (state, action) => {
-      state.AuthorizationStatus = action.payload;
-    })
-    .addCase(setUserInfo, (state, action) => {
-      state.UserInfo = action.payload;
-    });
+export const rootReducer = combineReducers({
+  [StoreNamespace.Offers]: dataProcess.reducer,
+  [StoreNamespace.User]: userProcess.reducer,
+  [StoreNamespace.SingleOffer]: singleOfferProcess.reducer,
 });

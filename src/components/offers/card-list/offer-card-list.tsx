@@ -21,7 +21,7 @@ export function OfferCardList(props: OfferListProps) {
               props.OnActiveOfferChange(null);
             }}
           >
-            <OfferCard Offer={offer} OfferCardType={OfferCardType.MainPage}/>
+            <OfferCard Offer={offer} OfferCardType={OfferCardType.Main}/>
           </span>
         )
       )}
