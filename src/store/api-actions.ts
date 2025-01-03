@@ -4,9 +4,9 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {Offers} from '../types/offer.ts';
 import {APIRoutes} from '../consts.ts';
-import {setOffers} from './offers/offers-reducer.ts';
+import {setOffers} from './offers/offers.slice.ts';
 import {Review, ReviewForm} from '../types/review.ts';
-import {setNearbyOffers, setReviews, setSingleOffer} from './single-offer/single-offer-reducer.ts';
+import {setNearbyOffers, setReviews, setSingleOffer} from './single-offer/single-offer.slice.ts';
 import {SingleOffer} from '../types/single-offer.ts';
 
 

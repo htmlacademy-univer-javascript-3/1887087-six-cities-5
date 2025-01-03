@@ -11,7 +11,7 @@ import {useAppSelector} from './store/hooks.ts';
 import {Loading} from './components/loading/Loading.tsx';
 import HistoryRouter from './components/route/history-router.tsx';
 import browserHistory from './browser-history.ts';
-import {isOffersLoaded} from './store/offers/offers-selectors.ts';
+import {isOffersLoaded} from './store/offers/offers.selectors.ts';
 
 export function App() {
   const isOfferLoaded = useAppSelector(isOffersLoaded);
