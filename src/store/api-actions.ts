@@ -2,12 +2,13 @@ import {AppDispatch} from '../types/state.ts';
 import {State} from 'history';
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {Offers} from '../types/offer.ts';
+import {Offer, Offers} from '../types/offer.ts';
 import {APIRoutes} from '../consts.ts';
-import {setOffers} from './offers/offers.slice.ts';
+import {markAsFavorite, setOffers} from './offers/offers.slice.ts';
 import {Review, ReviewForm} from '../types/review.ts';
 import {setNearbyOffers, setReviews, setSingleOffer} from './single-offer/single-offer.slice.ts';
 import {SingleOffer} from '../types/single-offer.ts';
+import {setFavoriteOffers, updateUserFavorites} from './user/user.slice.ts';
 
 
 export const fetchOffers = createAsyncThunk<void, undefined, {
@@ -30,7 +31,7 @@ export const fetchReviewsAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('data/fetchReviews', async ({ offerId }, { dispatch, extra: api }) => {
+>('fetchReviews', async ({ offerId }, { dispatch, extra: api }) => {
   const { data } = await api.get<Review[]>(`${APIRoutes.Comments}/${offerId}`);
   dispatch(setReviews({ reviews: data }));
 });
@@ -44,7 +45,7 @@ export const postReviewAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >(
-  'review/postReview',
+  'postReview',
   async ({ comment, rating, id }, { dispatch, extra: api }) => {
     await api.post(`${APIRoutes.Comments}/${id}`, {
       comment,
@@ -62,7 +63,7 @@ export const fetchNearbyOffersAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('data/fetchNearbyOffers', async ({ offerId }, { dispatch, extra: api }) => {
+>('fetchNearbyOffers', async ({ offerId }, { dispatch, extra: api }) => {
   const { data } = await api.get<Offers>(
     `${APIRoutes.Offers}/${offerId}/nearby`
   );
@@ -77,9 +78,41 @@ export const fetchSingleOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('data/fetchSingleOffer', async ({ offerId }, { dispatch, extra: api }) => {
+>('fetchSingleOffer', async ({ offerId }, { dispatch, extra: api }) => {
   const { data } = await api.get<SingleOffer>(`${APIRoutes.Offers}/${offerId}`);
   dispatch(fetchReviewsAction({ offerId }));
   dispatch(fetchNearbyOffersAction({ offerId }));
   dispatch(setSingleOffer({ offer: data }));
 });
+
+export const fetchFavoriteOffers = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchFavoriteOffers', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<Offers>(APIRoutes.Favorites);
+  dispatch(setFavoriteOffers(data));
+});
+
+export const editFavorites = createAsyncThunk<
+  void,
+  { offerId: string; isFavoriteNow: boolean },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(
+  'user/editFavorites',
+  async ({ offerId, isFavoriteNow }, { dispatch, extra: api }) => {
+    const { data } = await api.post<Offer & SingleOffer>(
+      `${APIRoutes.Favorites}/${offerId}/${isFavoriteNow ? 0 : 1}`
+    );
+    dispatch(updateUserFavorites({ editedOffer: data }));
+    dispatch(markAsFavorite(data.id));
+  }
+);

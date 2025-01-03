@@ -8,7 +8,7 @@ type ReviewFormProps = {
 };
 
 
-export function ReviewForm(props: ReviewFormProps): JSX.Element {
+export function ReviewForm(props: ReviewFormProps) {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const [rating, setRating] = useState<number|null>(null);

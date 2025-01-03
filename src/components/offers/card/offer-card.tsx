@@ -3,6 +3,11 @@ import {Link} from 'react-router-dom';
 import clsx from 'clsx';
 import {offerCardStyles, OfferCardType} from './offer-card-styles.ts';
 import {Offer} from '../../../types/offer.ts';
+import {useAppDispatch, useAppSelector} from '../../../store/hooks.ts';
+import {getAuthorizationStatus} from '../../../store/user/user.selectors.ts';
+import {AppRoute, AuthorizationStatus} from '../../../consts.ts';
+import {redirectToRoute} from '../../../store/actions.ts';
+import {editFavorites} from '../../../store/api-actions.ts';
 
 type OfferCardProps = {
   Offer: Offer;
@@ -11,6 +16,22 @@ type OfferCardProps = {
 
 
 export function OfferCard(props: OfferCardProps) {
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
+  const handleBookmarkClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+    } else {
+      dispatch(
+        editFavorites({
+          offerId: props.Offer.id,
+          isFavoriteNow: props.Offer.isFavorite,
+        })
+      );
+    }
+  };
+
   const styles = offerCardStyles[props.OfferCardType];
   return (
     <article className={`${styles.classPrefix}__card place-card`}>
@@ -37,6 +58,7 @@ export function OfferCard(props: OfferCardProps) {
           <button
             className={clsx('place-card__bookmark-button', 'button', props.Offer.isFavorite && 'place-card__bookmark-button--active')}
             type="button"
+            onClick={handleBookmarkClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark"/>

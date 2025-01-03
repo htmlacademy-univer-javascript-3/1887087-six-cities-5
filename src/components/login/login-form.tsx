@@ -3,7 +3,7 @@ import {FormEvent, useState} from 'react';
 import {login} from '../../store/auth-actions.ts';
 import {AuthRequest} from '../../types/auth-request.ts';
 
-export function LoginForm(): JSX.Element {
+export function LoginForm() {
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<AuthRequest>({
     email: '',

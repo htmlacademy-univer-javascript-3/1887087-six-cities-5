@@ -10,6 +10,7 @@ import {OfferSortCompareFunctions} from '../../components/offers/sort/offer-sort
 import {Offer} from '../../types/offer.ts';
 import {NavBar} from '../../components/nav-bar/nav-bar.tsx';
 import {getCurrentCity, getOffers} from '../../store/offers/offers.selectors.ts';
+import {MainPageEmpty} from './main-empty.tsx';
 
 export function Main() {
   const [offerSortOptions, setOfferSortOptions] = useState<SortOptions>(SortOptions.Popular);
@@ -33,17 +34,19 @@ export function Main() {
             <CitiesList></CitiesList>
           </div>
           <div className="cities">
-            <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{sortedOffers.length} places to stay in {currentCity.name}</b>
-                <OfferSortDropdown SortOption={offerSortOptions} OnSortOptionChange={setOfferSortOptions}/>
-                <OfferCardList Offers={sortedOffers} OnActiveOfferChange={setActiveOffer}/>
-              </section>
-              <div className="cities__right-section">
-                <Map City={currentCity} Offers={sortedOffers} ActiveOffer={activeOffer} />
-              </div>
-            </div>
+            {sortedOffers.length === 0 ?
+              <MainPageEmpty/> :
+              <div className="cities__places-container container">
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{sortedOffers.length} places to stay in {currentCity.name}</b>
+                  <OfferSortDropdown SortOption={offerSortOptions} OnSortOptionChange={setOfferSortOptions}/>
+                  <OfferCardList Offers={sortedOffers} OnActiveOfferChange={setActiveOffer}/>
+                </section>
+                <div className="cities__right-section">
+                  <Map City={currentCity} Offers={sortedOffers} ActiveOffer={activeOffer}/>
+                </div>
+              </div>}
           </div>
         </main>
       </div>
