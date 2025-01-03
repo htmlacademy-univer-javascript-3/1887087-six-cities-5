@@ -3,8 +3,8 @@ import {City} from './types/city.ts';
 export enum AppRoute {
   Main = '/',
   Login = '/login',
-  Favorites = '/favorites',
-  Offer = '/offer:id',
+  Favorites = '/favorite',
+  Offer = '/offer/:id',
 }
 
 export enum APIRoutes {

@@ -1,14 +1,15 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {Offer, Offers} from '../../types/offer.ts';
+import {Offer} from '../../types/offer.ts';
 import {City} from '../../types/city.ts';
 import {useMap} from '../hooks/use-map.tsx';
+import {SingleOffer} from '../../types/single-offer.ts';
 
 type MapProps = {
   City: City;
-  Offers: Offers;
-  ActiveOffer: Offer | null;
+  Offers: (Offer | SingleOffer) [];
+  ActiveOffer: Offer | SingleOffer | null;
 }
 
 const defaultCustomIcon = new Icon({
@@ -47,5 +48,5 @@ export function Map(props: MapProps) {
       };
     }
   }, [map, props.Offers, props.ActiveOffer]);
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className="cities__map map" style={{height: '500px'}} ref={mapRef}></section>;
 }

@@ -16,7 +16,6 @@ const StatusCodeMapping: Record<number, boolean> = {
 
 const shouldDisplayError = (response: AxiosResponse) => StatusCodeMapping[response.status];
 
-
 const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
 
@@ -26,17 +25,15 @@ export const createApi = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT,
   });
 
-  api.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
-      const token = getToken();
+  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    const token = getToken();
 
-      if (token && config.headers) {
-        config.headers['x-token'] = token;
-      }
+    if (token && config.headers) {
+      config.headers['X-Token'] = token;
+    }
 
-      return config;
-    },
-  );
+    return config;
+  });
 
   api.interceptors.response.use(
     (response) => response,

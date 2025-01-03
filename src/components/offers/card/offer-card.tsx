@@ -1,10 +1,8 @@
 import {Premium} from './premium.tsx';
-import {useNavigate} from 'react-router-dom';
-import {AppRoute} from '../../../consts.ts';
+import {Link} from 'react-router-dom';
 import clsx from 'clsx';
 import {offerCardStyles, OfferCardType} from './offer-card-styles.ts';
 import {Offer} from '../../../types/offer.ts';
-
 
 type OfferCardProps = {
   Offer: Offer;
@@ -13,13 +11,12 @@ type OfferCardProps = {
 
 
 export function OfferCard(props: OfferCardProps) {
-  const navigate = useNavigate();
   const styles = offerCardStyles[props.OfferCardType];
   return (
     <article className={`${styles.classPrefix}__card place-card`}>
       {props.Offer.isPremium ? <Premium/> : null}
       <div className={`${styles.classPrefix}__image-wrapper place-card__image-wrapper`}>
-        <a onClick={() => navigate(`${AppRoute.Offer}`)}>
+        <a>
           <img
             className="place-card__image"
             src={props.Offer.previewImage}
@@ -53,8 +50,8 @@ export function OfferCard(props: OfferCardProps) {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name" onClick={() => navigate(AppRoute.Offer)}>
-          <a>{props.Offer.title}</a>
+        <h2 className="place-card__name" >
+          <Link to={`offer/${props.Offer.id}`}>{props.Offer.title}</Link>
         </h2>
         <p className="place-card__type">{props.Offer.type}</p>
       </div>

@@ -9,13 +9,14 @@ import {OfferCardList} from '../../components/offers/card-list/offer-card-list.t
 import {OfferSortCompareFunctions} from '../../components/offers/sort/offer-sort.ts';
 import {Offer} from '../../types/offer.ts';
 import {NavBar} from '../../components/nav-bar/nav-bar.tsx';
+import {getCurrentCity, getOffers} from '../../store/offers/offers-selectors.ts';
 
 export function Main() {
   const [offerSortOptions, setOfferSortOptions] = useState<SortOptions>(SortOptions.Popular);
   const [activeOffer, setActiveOffer] = useState<Offer|null>(null);
 
-  const currentCity = useAppSelector((store) => store.City);
-  const sortedOffers = useAppSelector((store) => store.Offers)
+  const currentCity = useAppSelector(getCurrentCity);
+  const sortedOffers = useAppSelector(getOffers)
     .filter((offer) => offer.city.name === currentCity.name)
     .toSorted(OfferSortCompareFunctions[offerSortOptions]);
 

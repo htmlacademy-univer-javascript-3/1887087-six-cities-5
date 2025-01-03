@@ -1,12 +1,13 @@
 import {AllCities} from '../../consts.ts';
 import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
 import clsx from 'clsx';
-import {setCity} from '../../store/actions.ts';
+import {setCity} from '../../store/offers/offers-reducer.ts';
+import {getCurrentCity} from '../../store/offers/offers-selectors.ts';
 
 
 export function CitiesList(){
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.City);
+  const currentCity = useAppSelector(getCurrentCity);
 
   return (
     <section className="locations container">

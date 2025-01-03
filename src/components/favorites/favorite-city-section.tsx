@@ -28,7 +28,7 @@ export function FavoritesOfferCardList(props: FavoritesOfferCardListProps) {
               (
                 <OfferCard
                   Offer={{...city}}
-                  OfferCardType={OfferCardType.FavoritesPage}
+                  OfferCardType={OfferCardType.Favorites}
                   key={city.id}
                 />
               ))}

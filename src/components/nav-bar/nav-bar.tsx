@@ -1,12 +1,17 @@
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../consts.ts';
-import {useAppSelector} from '../../store/hooks.ts';
+import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
+import {getAuthorizationStatus, getUserInfo} from '../../store/user/user-selectors.ts';
+import {store} from '../../store';
+import {checkAuthorizationStatus, logout} from '../../store/auth-actions.ts';
 
+store.dispatch(checkAuthorizationStatus());
 
 export function NavBar(){
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userInfo = useAppSelector((state) => state.UserInfo);
-  const authorizationStatus = useAppSelector((state) => state.AuthorizationStatus);
+  const userInfo = useAppSelector(getUserInfo);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <div className="container">
@@ -29,15 +34,25 @@ export function NavBar(){
               </li>}
             {authorizationStatus === AuthorizationStatus.Auth &&
               <li className="header__nav-item">
-                <a className="header__nav-link" href="#">
+                <Link
+                  className="header__nav-link"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    dispatch(logout());
+                  }}
+                  to={AppRoute.Main}
+                >
                   <span className="header__signout">Sign out</span>
-                </a>
+                </Link>
               </li>}
             {authorizationStatus !== AuthorizationStatus.Auth &&
               <li className="header__nav-item">
-                <a className="header__nav-link" onClick={() => navigate(AppRoute.Login)}>
+                <Link
+                  className="header__nav-link"
+                  to={AppRoute.Login}
+                >
                   <span className="header__signout">Log in</span>
-                </a>
+                </Link>
               </li>}
           </ul>
         </nav>
