@@ -11,11 +11,11 @@ import {
   getReviews,
   getSingleOffer,
   getSingleOfferDataLoadingStatus
-} from '../../store/single-offer/single-offer-selectors.ts';
+} from '../../store/single-offer/single-offer.selectors.ts';
 import clsx from 'clsx';
 import {WordCapitalize} from '../../helpers/helpers.ts';
 import {Reviews} from '../../components/review/reviews.tsx';
-import {getAuthorizationStatus, getUserInfo} from '../../store/user/user-selectors.ts';
+import {getAuthorizationStatus, getUserInfo} from '../../store/user/user.selectors.ts';
 import {OfferCard} from '../../components/offers/card/offer-card.tsx';
 import {OfferCardType} from '../../components/offers/card/offer-card-styles.ts';
 import {NotFound} from '../not-found/not-found.tsx';
@@ -36,7 +36,7 @@ export function Offer() {
   const offer = useAppSelector(getSingleOffer);
   const isLoaded = useAppSelector(getSingleOfferDataLoadingStatus);
   const reviews = useAppSelector(getReviews);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus)
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOfferPosted = reviews.some((review) => review.user.name === userInfo?.name);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 

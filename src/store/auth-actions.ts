@@ -7,8 +7,8 @@ import {UserInfo} from '../types/user-info.ts';
 import {APIRoutes, AppRoute, DefaultCity} from '../consts.ts';
 import {dropToken, saveToken} from '../services/token.ts';
 import {redirectToRoute} from './actions.ts';
-import {setUserInfo} from './user/user-reducer.ts';
-import {setCity} from './offers/offers-reducer.ts';
+import {setUserInfo} from './user/user.slice.ts';
+import {setCity} from './offers/offers.slice.ts';
 
 export const checkAuthorizationStatus = createAsyncThunk<
   void,

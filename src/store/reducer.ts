@@ -1,7 +1,7 @@
 import { StoreNamespace } from '../types/store-namespace.ts';
-import {userProcess} from './user/user-reducer.ts';
-import {dataProcess} from './offers/offers-reducer.ts';
-import {singleOfferProcess} from './single-offer/single-offer-reducer.ts';
+import {userProcess} from './user/user.slice.ts';
+import {dataProcess} from './offers/offers.slice.ts';
+import {singleOfferProcess} from './single-offer/single-offer.slice.ts';
 import {combineReducers} from '@reduxjs/toolkit';
 
 

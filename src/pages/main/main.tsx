@@ -9,7 +9,7 @@ import {OfferCardList} from '../../components/offers/card-list/offer-card-list.t
 import {OfferSortCompareFunctions} from '../../components/offers/sort/offer-sort.ts';
 import {Offer} from '../../types/offer.ts';
 import {NavBar} from '../../components/nav-bar/nav-bar.tsx';
-import {getCurrentCity, getOffers} from '../../store/offers/offers-selectors.ts';
+import {getCurrentCity, getOffers} from '../../store/offers/offers.selectors.ts';
 
 export function Main() {
   const [offerSortOptions, setOfferSortOptions] = useState<SortOptions>(SortOptions.Popular);

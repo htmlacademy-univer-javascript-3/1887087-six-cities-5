@@ -1,8 +1,8 @@
 import {AllCities} from '../../consts.ts';
 import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
 import clsx from 'clsx';
-import {setCity} from '../../store/offers/offers-reducer.ts';
-import {getCurrentCity} from '../../store/offers/offers-selectors.ts';
+import {setCity} from '../../store/offers/offers.slice.ts';
+import {getCurrentCity} from '../../store/offers/offers.selectors.ts';
 
 
 export function CitiesList(){
