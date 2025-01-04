@@ -5,24 +5,11 @@ import {UserInfo} from './user-info.ts';
 import {City} from './city.ts';
 import {SingleOffer} from './single-offer.ts';
 import {Review} from './review.ts';
+import {ReviewStatus} from './review-status.ts';
 
 export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
-
-export type Store = {
-  AuthorizationStatus: AuthorizationStatus;
-  City: City;
-  Offers: Offers;
-  IsOfferDataLoaded: boolean;
-  UserInfo: UserInfo|null;
-
-  Offer: Offer | null;
-  IsSingleOfferDataLoaded: boolean;
-  NearbyOffers: Offers;
-  isReviewPosting: boolean;
-  isFormAccepted: boolean;
-};
 
 export type UserState = {
   AuthorizationStatus: AuthorizationStatus;
@@ -42,4 +29,5 @@ export type SingleOfferState = {
   Reviews: Review[];
   IsLoaded: boolean;
   NearbyOffers: Offers;
+  ReviewStatus: ReviewStatus;
 };

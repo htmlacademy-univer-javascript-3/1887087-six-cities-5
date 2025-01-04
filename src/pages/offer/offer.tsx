@@ -15,12 +15,14 @@ import {
 import clsx from 'clsx';
 import {WordCapitalize} from '../../helpers/helpers.ts';
 import {Reviews} from '../../components/review/reviews.tsx';
-import {getAuthorizationStatus, getUserInfo} from '../../store/user/user.selectors.ts';
+import {getAuthorizationStatus} from '../../store/user/user.selectors.ts';
 import {OfferCard} from '../../components/offers/card/offer-card.tsx';
 import {OfferCardType} from '../../components/offers/card/offer-card-styles.ts';
 import {NotFound} from '../not-found/not-found.tsx';
 import {Loading} from '../../components/loading/Loading.tsx';
 import {NavBar} from '../../components/nav-bar/nav-bar.tsx';
+import {Bookmark} from '../../components/bookmarks/bookmark.tsx';
+import {BookmarkStyle} from '../../components/bookmarks/bookmark-styles.ts';
 
 export function Offer() {
   const offerId = useParams<{ id: string }>().id;
@@ -32,12 +34,10 @@ export function Offer() {
     }
   }, [offerId, dispatch]);
 
-  const userInfo = useAppSelector(getUserInfo);
   const offer = useAppSelector(getSingleOffer);
   const isLoaded = useAppSelector(getSingleOfferDataLoadingStatus);
   const reviews = useAppSelector(getReviews);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isOfferPosted = reviews.some((review) => review.user.name === userInfo?.name);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
   if (!isLoaded) {
@@ -80,19 +80,11 @@ export function Offer() {
                   <h1 className="offer__name">
                     {offer.title}
                   </h1>
-                  <button
-                    className={clsx('offer__bookmark-button', 'button', offer.isFavorite && 'offer__bookmark-button--active')}
-                    type="button"
-                  >
-                    <svg className="offer__bookmark-icon" width={31} height={33}>
-                      <use xlinkHref="#icon-bookmark"/>
-                    </svg>
-                    <span className="visually-hidden">To bookmarks</span>
-                  </button>
+                  <Bookmark Offer={offer} BookmarkStyle={BookmarkStyle.Offer} />
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{width: `${((offer.rating ?? 0) * 20)}%`}}>
+                    <span style={{width: `${(Math.round(offer.rating) * 20)}%`}}>
                       <span className="visually-hidden">Rating</span>
                     </span>
                   </div>
@@ -101,10 +93,10 @@ export function Offer() {
                 <ul className="offer__features">
                   <li className="offer__feature offer__feature--entire">{WordCapitalize(offer.type)}</li>
                   <li className="offer__feature offer__feature--bedrooms">
-                    {offer.bedrooms} Bedrooms
+                    {offer.bedrooms} {offer.bedrooms === 1 ? 'Bedroom' : 'Bedrooms' }
                   </li>
                   <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {offer.maxAdults} {offer.maxAdults === 1 ? 'adult' : 'adults' }
                   </li>
                 </ul>
                 <div className="offer__price">
@@ -146,8 +138,13 @@ export function Offer() {
                   <h2 className="reviews__title">
                   Reviews · <span className="reviews__amount">{reviews.length}</span>
                   </h2>
-                  <Reviews Reviews={reviews}></Reviews>
-                  {authorizationStatus === AuthorizationStatus.Auth && !isOfferPosted && <ReviewForm OfferId={offer.id ?? ''}/>}
+                  <Reviews Reviews={
+                    reviews
+                      .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                      .slice(0, 10)
+                  }
+                  />
+                  {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm OfferId={offer.id ?? ''}/>}
                 </section>
               </div>
             </div>
