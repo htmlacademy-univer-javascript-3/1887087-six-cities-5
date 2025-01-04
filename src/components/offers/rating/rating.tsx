@@ -25,6 +25,7 @@ export function Rating(props: RatingProps) {
             onChange={() => {
               props.SetRating(rating.value);
             }}
+            value={rating.value}
           />
           <label
             htmlFor={`${rating.value}-stars`}

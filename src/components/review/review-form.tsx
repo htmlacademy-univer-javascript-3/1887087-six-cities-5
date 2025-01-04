@@ -1,7 +1,10 @@
 import {FormEvent, useEffect, useState} from 'react';
 import {Rating} from '../offers/rating/rating.tsx';
 import {postReviewAction} from '../../store/api-actions.ts';
-import {useAppDispatch} from '../../store/hooks.ts';
+import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
+import {getReviewStatus} from '../../store/single-offer/single-offer.selectors.ts';
+import {ReviewStatus} from '../../types/review-status.ts';
+import {setReviewStatus} from '../../store/single-offer/single-offer.slice.ts';
 
 type ReviewFormProps = {
   OfferId: string;
@@ -10,15 +13,16 @@ type ReviewFormProps = {
 
 export function ReviewForm(props: ReviewFormProps) {
   const [isFormValid, setIsFormValid] = useState(false);
-
   const [rating, setRating] = useState<number|null>(null);
   const [comment, setComment] = useState<string>('');
 
+  const reviewStatus = useAppSelector(getReviewStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (
       comment.length > 50 &&
+      comment.length < 300 &&
       rating !== null
     ) {
       setIsFormValid(true);
@@ -26,6 +30,7 @@ export function ReviewForm(props: ReviewFormProps) {
       setIsFormValid(false);
     }
   }, [rating, comment]);
+
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -36,7 +41,16 @@ export function ReviewForm(props: ReviewFormProps) {
         id: props.OfferId,
       })
     );
+
   };
+  useEffect(() => {
+    if (reviewStatus === ReviewStatus.Posted) {
+      setComment('');
+      setRating(null);
+
+      dispatch(setReviewStatus(ReviewStatus.None));
+    }
+  }, [dispatch, reviewStatus]);
 
 
   return (
@@ -54,6 +68,7 @@ export function ReviewForm(props: ReviewFormProps) {
         onChange={({ target: { value } }) => {
           setComment(value);
         }}
+        value={comment}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -65,7 +80,7 @@ export function ReviewForm(props: ReviewFormProps) {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isFormValid}
+          disabled={!isFormValid || reviewStatus === ReviewStatus.PostPending}
         >
           Submit
         </button>

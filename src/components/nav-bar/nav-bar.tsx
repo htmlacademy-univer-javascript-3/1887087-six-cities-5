@@ -29,7 +29,7 @@ export function NavBar(){
                 <a className="header__nav-link header__nav-link--profile">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
-                  <span className="header__user-name user__name">{userInfo?.email}</span>
+                  <span className="header__user-name user__name" onClick={() => navigate(AppRoute.Favorites)}>{userInfo?.email}</span>
                   <span className="header__favorite-count" onClick={() => navigate(AppRoute.Favorites)}>{favoriteOffers.length}</span>
                 </a>
               </li>}

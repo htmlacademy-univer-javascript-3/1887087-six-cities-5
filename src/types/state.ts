@@ -5,6 +5,7 @@ import {UserInfo} from './user-info.ts';
 import {City} from './city.ts';
 import {SingleOffer} from './single-offer.ts';
 import {Review} from './review.ts';
+import {ReviewStatus} from './review-status.ts';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -42,4 +43,5 @@ export type SingleOfferState = {
   Reviews: Review[];
   IsLoaded: boolean;
   NearbyOffers: Offers;
+  ReviewStatus: ReviewStatus;
 };

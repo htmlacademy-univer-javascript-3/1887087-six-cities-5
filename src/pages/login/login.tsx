@@ -1,8 +1,18 @@
 import {Helmet} from 'react-helmet-async';
-import {AppName} from '../../consts.ts';
+import {AppName, AppRoute, AuthorizationStatus} from '../../consts.ts';
 import {LoginForm} from '../../components/login/login-form.tsx';
+import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
+import { getAuthorizationStatus } from '../../store/user/user.selectors.ts';
+import {redirectToRoute} from '../../store/actions.ts';
 
 export function Login() {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    dispatch(redirectToRoute(AppRoute.Main));
+  }
+
   return (
     <div className="page page--gray page--login">
       <Helmet>

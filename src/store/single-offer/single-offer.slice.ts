@@ -4,13 +4,15 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Offers} from '../../types/offer.ts';
 import {SingleOffer} from '../../types/single-offer.ts';
 import {Review} from '../../types/review.ts';
-import {fetchNearbyOffersAction, fetchReviewsAction, fetchSingleOffer} from '../api-actions.ts';
+import {fetchNearbyOffersAction, fetchReviewsAction, fetchSingleOffer, postReviewAction} from '../api-actions.ts';
+import {ReviewStatus} from '../../types/review-status.ts';
 
 const initialState: SingleOfferState = {
   IsLoaded: false,
   NearbyOffers: [],
   Offer: null,
   Reviews: [],
+  ReviewStatus: ReviewStatus.None,
 };
 
 export const singleOfferProcess = createSlice({
@@ -32,19 +34,16 @@ export const singleOfferProcess = createSlice({
     ) => {
       state.Reviews = action.payload.reviews;
     },
-    setSingleOfferLoadingStatus: (
-      state,
-      action: PayloadAction<boolean>
-    ) => {
-      state.IsLoaded = action.payload;
-    },
-    sendReview: (state, action: PayloadAction<Review>) => {
-      state.Reviews.push(action.payload);
-    },
     updateSingleOfferFavoritesStatus: (state) => {
       if (state.Offer !== null) {
         state.Offer.isFavorite = !state.Offer?.isFavorite;
       }
+    },
+    addReview: (state, action: PayloadAction<Review>) => {
+      state.Reviews.push(action.payload);
+    },
+    setReviewStatus: (state, action: PayloadAction<ReviewStatus>) => {
+      state.ReviewStatus = action.payload;
     },
   },
   extraReducers(builder) {
@@ -75,6 +74,15 @@ export const singleOfferProcess = createSlice({
       })
       .addCase(fetchSingleOffer.pending, (state) => {
         state.IsLoaded = false;
+      })
+      .addCase(postReviewAction.pending, (state) => {
+        state.ReviewStatus = ReviewStatus.PostPending;
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.ReviewStatus = ReviewStatus.Rejected;
+      })
+      .addCase(postReviewAction.fulfilled, (state) => {
+        state.ReviewStatus = ReviewStatus.Posted;
       });
   },
 });
@@ -83,7 +91,7 @@ export const {
   setSingleOffer,
   setNearbyOffers,
   setReviews,
-  sendReview,
-  setSingleOfferLoadingStatus,
   updateSingleOfferFavoritesStatus,
+  addReview,
+  setReviewStatus
 } = singleOfferProcess.actions;

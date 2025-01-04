@@ -6,7 +6,13 @@ import {Offer, Offers} from '../types/offer.ts';
 import {APIRoutes} from '../consts.ts';
 import {markAsFavorite, setOffers} from './offers/offers.slice.ts';
 import {Review, ReviewForm} from '../types/review.ts';
-import {setNearbyOffers, setReviews, setSingleOffer} from './single-offer/single-offer.slice.ts';
+import {
+  addReview,
+  setNearbyOffers,
+  setReviews,
+  setSingleOffer,
+  updateSingleOfferFavoritesStatus
+} from './single-offer/single-offer.slice.ts';
 import {SingleOffer} from '../types/single-offer.ts';
 import {setFavoriteOffers, updateUserFavorites} from './user/user.slice.ts';
 
@@ -47,11 +53,11 @@ export const postReviewAction = createAsyncThunk<
 >(
   'postReview',
   async ({ comment, rating, id }, { dispatch, extra: api }) => {
-    await api.post(`${APIRoutes.Comments}/${id}`, {
+    const { data } = await api.post<Review>(`${APIRoutes.Comments}/${id}`, {
       comment,
       rating: Number(rating),
     });
-    dispatch(fetchReviewsAction({ offerId: id }));
+    dispatch(addReview(data));
   }
 );
 
@@ -113,6 +119,7 @@ export const editFavorites = createAsyncThunk<
       `${APIRoutes.Favorites}/${offerId}/${isFavoriteNow ? 0 : 1}`
     );
     dispatch(updateUserFavorites({ editedOffer: data }));
+    dispatch(updateSingleOfferFavoritesStatus());
     dispatch(markAsFavorite(data.id));
   }
 );
