@@ -11,20 +11,6 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type Store = {
-  AuthorizationStatus: AuthorizationStatus;
-  City: City;
-  Offers: Offers;
-  IsOfferDataLoaded: boolean;
-  UserInfo: UserInfo|null;
-
-  Offer: Offer | null;
-  IsSingleOfferDataLoaded: boolean;
-  NearbyOffers: Offers;
-  isReviewPosting: boolean;
-  isFormAccepted: boolean;
-};
-
 export type UserState = {
   AuthorizationStatus: AuthorizationStatus;
   UserInfo: UserInfo | null;
