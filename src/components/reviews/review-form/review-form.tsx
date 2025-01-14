@@ -1,10 +1,10 @@
 import {FormEvent, useEffect, useState} from 'react';
-import {Rating} from '../offers/rating/rating.tsx';
-import {postReviewAction} from '../../store/api-actions.ts';
-import {useAppDispatch, useAppSelector} from '../../store/hooks.ts';
-import {getReviewStatus} from '../../store/single-offer/single-offer.selectors.ts';
-import {ReviewStatus} from '../../types/review-status.ts';
-import {setReviewStatus} from '../../store/single-offer/single-offer.slice.ts';
+import {Rating} from '../../offers/rating/rating.tsx';
+import {postReviewAction} from '../../../store/api-actions.ts';
+import {useAppDispatch, useAppSelector} from '../../../store/hooks.ts';
+import {getReviewStatus} from '../../../store/single-offer/single-offer.selectors.ts';
+import {ReviewStatus} from '../../../types/review-status.ts';
+import {setReviewStatus} from '../../../store/single-offer/single-offer.slice.ts';
 
 type ReviewFormProps = {
   OfferId: string;
@@ -13,22 +13,29 @@ type ReviewFormProps = {
 
 export function ReviewForm(props: ReviewFormProps) {
   const [isFormValid, setIsFormValid] = useState(false);
-  const [rating, setRating] = useState<number|null>(null);
+  const [rating, setRating] = useState<number | undefined>(undefined);
   const [comment, setComment] = useState<string>('');
 
   const reviewStatus = useAppSelector(getReviewStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (
-      comment.length > 50 &&
-      comment.length < 300 &&
-      rating !== null
-    ) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
+    let isMounted = true;
+
+    if (isMounted) {
+      if (
+        comment.length > 50 &&
+        comment.length < 300 &&
+        rating !== undefined
+      ) {
+        setIsFormValid(true);
+      } else {
+        setIsFormValid(false);
+      }
     }
+    return () => {
+      isMounted = false;
+    };
   }, [rating, comment]);
 
 
@@ -44,12 +51,19 @@ export function ReviewForm(props: ReviewFormProps) {
 
   };
   useEffect(() => {
-    if (reviewStatus === ReviewStatus.Posted) {
-      setComment('');
-      setRating(null);
+    let isMounted = true;
 
-      dispatch(setReviewStatus(ReviewStatus.None));
+    if (isMounted) {
+      if (reviewStatus === ReviewStatus.Posted) {
+        setComment('');
+        setRating(undefined);
+
+        dispatch(setReviewStatus(ReviewStatus.None));
+      }
     }
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch, reviewStatus]);
 
 
@@ -58,14 +72,13 @@ export function ReviewForm(props: ReviewFormProps) {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <Rating SetRating={setRating} />
+      <Rating Rating={rating} SetRating={setRating}/>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue=""
-        onChange={({ target: { value } }) => {
+        onChange={({target: {value}}) => {
           setComment(value);
         }}
         value={comment}

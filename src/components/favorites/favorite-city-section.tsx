@@ -1,5 +1,5 @@
-import {OfferCardType} from '../offers/card/offer-card-styles.ts';
-import {OfferCard} from '../offers/card/offer-card.tsx';
+import {OfferCardType} from '../offers/offer-card/offer-card-styles.ts';
+import {OfferCard} from '../offers/offer-card/offer-card.tsx';
 import {useAppSelector} from '../../store/hooks.ts';
 import {getFavoriteOffers} from '../../store/user/user.selectors.ts';
 import {AllCities} from '../../consts.ts';

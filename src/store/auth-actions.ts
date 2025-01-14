@@ -19,7 +19,7 @@ export const checkAuthorizationStatus = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('checkAuthorizationStatus', async (_arg, { dispatch, extra: api }) => {
+>('user/checkAuthorizationStatus', async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<UserInfo>(APIRoutes.Login);
   dispatch(setUserInfo(data));
   dispatch(fetchFavoriteOffers());
@@ -30,7 +30,7 @@ export const login = createAsyncThunk<void, AuthRequest, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'login',
+  'user/login',
   async (payload, { dispatch, extra: api }) => {
     const {data} = await api.post<UserInfo>(APIRoutes.Login, payload);
     saveToken(data.token);
@@ -50,7 +50,7 @@ export const logout = createAsyncThunk<
         extra: AxiosInstance;
     }
 >(
-  'logout',
+  'user/logout',
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoutes.Logout);
     dropToken();
