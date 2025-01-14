@@ -9,6 +9,7 @@ export function LoginForm() {
     email: '',
     password: '',
   });
+  const [passwordError, setPasswordError] = useState<string | undefined>();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -18,9 +19,27 @@ export function LoginForm() {
     }));
   };
 
+  const validatePassword = (password: string) => {
+    if (password.length < 2){
+      setPasswordError('password must be longer than or equal to 2 characters');
+      return false;
+    }
+    if (!password.match('[0-9]+')){
+      setPasswordError('Password no have number');
+      return false;
+    }
+    if (!password.match('[a-z]+') && !password.match('[A-Z]+')){
+      setPasswordError('Password no have letter');
+      return false;
+    }
+
+    setPasswordError(undefined);
+    return true;
+  };
+
   const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (formData.email.length > 0 && formData.password.length > 0) {
+    if (formData.email.length && validatePassword(formData.password)) {
       dispatch(login(formData));
     }
   };
@@ -50,6 +69,7 @@ export function LoginForm() {
           placeholder="Password"
           required
         />
+        {passwordError && <p>{passwordError}</p>}
       </div>
       <button className="login__submit form__submit button" type="submit">
         Sign in

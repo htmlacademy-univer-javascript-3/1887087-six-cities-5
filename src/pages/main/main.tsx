@@ -1,12 +1,12 @@
 import {Helmet} from 'react-helmet-async';
 import {AppName, SortOptions} from '../../consts.ts';
 import {Map} from '../../components/map/map.tsx';
-import {CitiesList} from '../../components/cities/cities-list.tsx';
+import {CitiesList} from '../../components/cities-list/cities-list.tsx';
 import {useAppSelector} from '../../store/hooks.ts';
 import {useState} from 'react';
-import {OfferSortDropdown} from '../../components/offers/sort/offer-sort-dropdown.tsx';
-import {OfferCardList} from '../../components/offers/card-list/offer-card-list.tsx';
-import {OfferSortCompareFunctions} from '../../components/offers/sort/offer-sort.ts';
+import {OfferSortDropdown} from '../../components/offers/offer-sort/offer-sort-dropdown.tsx';
+import {OfferCardList} from '../../components/offers/offer-card-list/offer-card-list.tsx';
+import {OfferSortCompareFunctions} from '../../components/offers/offer-sort/offer-sort.ts';
 import {Offer} from '../../types/offer.ts';
 import {NavBar} from '../../components/nav-bar/nav-bar.tsx';
 import {getCurrentCity, getOffers} from '../../store/offers/offers.selectors.ts';

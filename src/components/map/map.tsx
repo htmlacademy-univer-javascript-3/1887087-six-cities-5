@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
-import { Icon, Marker, layerGroup } from 'leaflet';
+import {useRef, useEffect} from 'react';
+import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {Offer} from '../../types/offer.ts';
 import {City} from '../../types/city.ts';
@@ -28,6 +28,14 @@ export function Map(props: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, props.City);
   useEffect(() => {
+    let isMounted = true;
+
+    if (!isMounted) {
+      return () => {
+        isMounted = false;
+      };
+    }
+
     if (map) {
       const markerLayer = layerGroup().addTo(map);
       props.Offers.forEach((offer) => {
@@ -45,6 +53,7 @@ export function Map(props: MapProps) {
       });
       return () => {
         map.removeLayer(markerLayer);
+        isMounted = false;
       };
     }
   }, [map, props.Offers, props.ActiveOffer]);

@@ -1,6 +1,6 @@
 import {Helmet} from 'react-helmet-async';
 import {AppName, AuthorizationStatus, DefaultCity} from '../../consts.ts';
-import {ReviewForm} from '../../components/review/review-form.tsx';
+import {ReviewForm} from '../../components/reviews/review-form/review-form.tsx';
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {Map} from '../../components/map/map.tsx';
@@ -13,13 +13,13 @@ import {
   getSingleOfferDataLoadingStatus
 } from '../../store/single-offer/single-offer.selectors.ts';
 import clsx from 'clsx';
-import {WordCapitalize} from '../../helpers/helpers.ts';
-import {Reviews} from '../../components/review/reviews.tsx';
+import {wordCapitalize} from '../../helpers/helpers.ts';
+import {Reviews} from '../../components/reviews/reviews/reviews.tsx';
 import {getAuthorizationStatus} from '../../store/user/user.selectors.ts';
-import {OfferCard} from '../../components/offers/card/offer-card.tsx';
-import {OfferCardType} from '../../components/offers/card/offer-card-styles.ts';
+import {OfferCard} from '../../components/offers/offer-card/offer-card.tsx';
+import {OfferCardType} from '../../components/offers/offer-card/offer-card-styles.ts';
 import {NotFound} from '../not-found/not-found.tsx';
-import {Loading} from '../../components/loading/Loading.tsx';
+import {Loading} from '../../components/loading/loading.tsx';
 import {NavBar} from '../../components/nav-bar/nav-bar.tsx';
 import {Bookmark} from '../../components/bookmarks/bookmark.tsx';
 import {BookmarkStyle} from '../../components/bookmarks/bookmark-styles.ts';
@@ -29,9 +29,17 @@ export function Offer() {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (offerId !== undefined){
-      dispatch(fetchSingleOffer({ offerId }));
+    let isMounted = true;
+
+    if (isMounted) {
+      if (offerId !== undefined) {
+        dispatch(fetchSingleOffer({offerId}));
+      }
     }
+    return () => {
+      isMounted = false;
+    };
+
   }, [offerId, dispatch]);
 
   const offer = useAppSelector(getSingleOffer);
@@ -41,11 +49,11 @@ export function Offer() {
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
   if (!isLoaded) {
-    return <Loading />;
+    return <Loading/>;
   }
 
   if (offer === null) {
-    return <NotFound />;
+    return <NotFound/>;
   }
 
   return (
@@ -73,14 +81,14 @@ export function Offer() {
             <div className="offer__container container">
               <div className="offer__wrapper">
                 {offer.isPremium &&
-                <div className="offer__mark">
-                  <span>Premium</span>
-                </div>}
+                  <div className="offer__mark">
+                    <span>Premium</span>
+                  </div>}
                 <div className="offer__name-wrapper">
                   <h1 className="offer__name">
                     {offer.title}
                   </h1>
-                  <Bookmark Offer={offer} BookmarkStyle={BookmarkStyle.Offer} />
+                  <Bookmark Offer={offer} BookmarkStyle={BookmarkStyle.Offer}/>
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
@@ -91,12 +99,12 @@ export function Offer() {
                   <span className="offer__rating-value rating__value">{offer.rating}</span>
                 </div>
                 <ul className="offer__features">
-                  <li className="offer__feature offer__feature--entire">{WordCapitalize(offer.type)}</li>
+                  <li className="offer__feature offer__feature--entire">{wordCapitalize(offer.type)}</li>
                   <li className="offer__feature offer__feature--bedrooms">
-                    {offer.bedrooms} {offer.bedrooms === 1 ? 'Bedroom' : 'Bedrooms' }
+                    {offer.bedrooms} {offer.bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}
                   </li>
                   <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} {offer.maxAdults === 1 ? 'adult' : 'adults' }
+                    Max {offer.maxAdults} {offer.maxAdults === 1 ? 'adult' : 'adults'}
                   </li>
                 </ul>
                 <div className="offer__price">
@@ -136,7 +144,7 @@ export function Offer() {
                 </div>
                 <section className="offer__reviews reviews">
                   <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">{reviews.length}</span>
+                    Reviews · <span className="reviews__amount">{reviews.length}</span>
                   </h2>
                   <Reviews Reviews={
                     reviews
@@ -157,11 +165,11 @@ export function Offer() {
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">
-              Other places in the neighbourhood
+                Other places in the neighbourhood
               </h2>
               <div className="near-places__list places__list">
                 {nearbyOffers.map((nearbyOffer) => (
-                  <OfferCard Offer={nearbyOffer} OfferCardType={OfferCardType.Nearby} key={nearbyOffer.id} />
+                  <OfferCard Offer={nearbyOffer} OfferCardType={OfferCardType.Nearby} key={nearbyOffer.id}/>
                 ))}
               </div>
             </section>
