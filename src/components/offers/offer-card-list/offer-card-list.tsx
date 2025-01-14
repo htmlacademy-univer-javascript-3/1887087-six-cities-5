@@ -1,5 +1,5 @@
-import {OfferCard} from '../card/offer-card.tsx';
-import {OfferCardType} from '../card/offer-card-styles.ts';
+import {OfferCard} from '../offer-card/offer-card.tsx';
+import {OfferCardType} from '../offer-card/offer-card-styles.ts';
 import {Offer, Offers} from '../../../types/offer.ts';
 
 type OfferListProps = {

@@ -1,5 +1,5 @@
 
-export function WordCapitalize(word: string | undefined) {
+export function wordCapitalize(word: string | undefined) {
   if (!word) {
     return word;
   }

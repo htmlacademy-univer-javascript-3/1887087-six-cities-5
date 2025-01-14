@@ -1,4 +1,4 @@
-import {PlaceType} from '../components/offers/card/place-type.ts';
+import {PlaceType} from '../components/offers/offer-card/place-type.ts';
 import {City} from './city.ts';
 import {Location} from './locatioin.ts';
 
