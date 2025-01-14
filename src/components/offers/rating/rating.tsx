@@ -1,3 +1,4 @@
+import {Fragment} from 'react';
 
 const ratings = [
   {value: 1, title: 'terribly'},
@@ -8,6 +9,7 @@ const ratings = [
 ];
 
 type RatingProps = {
+  Rating: number | undefined;
   SetRating : (rating: number) => void;
 }
 
@@ -15,13 +17,13 @@ export function Rating(props: RatingProps) {
   return (
     <div className="reviews__rating-form form__rating">
       {ratings.map((rating) => (
-        <>
+        <Fragment key={rating.value}>
           <input
             className="form__rating-input visually-hidden"
             name="rating"
-            defaultValue={5}
             id={`${rating.value}-stars`}
             type="radio"
+            checked={props.Rating === rating.value}
             onChange={() => {
               props.SetRating(rating.value);
             }}
@@ -36,7 +38,7 @@ export function Rating(props: RatingProps) {
               <use xlinkHref="#icon-star"/>
             </svg>
           </label>
-        </>
+        </Fragment>
       ))}
     </div>
   );

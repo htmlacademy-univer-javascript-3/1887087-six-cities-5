@@ -22,7 +22,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'fetchOffers',
+  'data/fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
     const {data} = await api.get<Offers>(APIRoutes.Offers);
     dispatch(setOffers(data));
@@ -37,7 +37,7 @@ export const fetchReviewsAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('fetchReviews', async ({ offerId }, { dispatch, extra: api }) => {
+>('review/fetchReviews', async ({ offerId }, { dispatch, extra: api }) => {
   const { data } = await api.get<Review[]>(`${APIRoutes.Comments}/${offerId}`);
   dispatch(setReviews({ reviews: data }));
 });
@@ -51,7 +51,7 @@ export const postReviewAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >(
-  'postReview',
+  'review/postReview',
   async ({ comment, rating, id }, { dispatch, extra: api }) => {
     const { data } = await api.post<Review>(`${APIRoutes.Comments}/${id}`, {
       comment,
@@ -69,7 +69,7 @@ export const fetchNearbyOffersAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('fetchNearbyOffers', async ({ offerId }, { dispatch, extra: api }) => {
+>('data/fetchNearbyOffers', async ({ offerId }, { dispatch, extra: api }) => {
   const { data } = await api.get<Offers>(
     `${APIRoutes.Offers}/${offerId}/nearby`
   );
@@ -84,7 +84,7 @@ export const fetchSingleOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('fetchSingleOffer', async ({ offerId }, { dispatch, extra: api }) => {
+>('data/fetchSingleOffer', async ({ offerId }, { dispatch, extra: api }) => {
   const { data } = await api.get<SingleOffer>(`${APIRoutes.Offers}/${offerId}`);
   dispatch(fetchReviewsAction({ offerId }));
   dispatch(fetchNearbyOffersAction({ offerId }));
