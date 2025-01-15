@@ -8,7 +8,7 @@ import {HelmetProvider} from 'react-helmet-async';
 import {PrivateRoute} from './components/private-route/privare-route.tsx';
 import {Favorites} from './pages/favorites/favorites.tsx';
 import {useAppSelector} from './store/hooks.ts';
-import {Loading} from './components/loading/Loading.tsx';
+import {Loading} from './components/loading/loading.tsx';
 import HistoryRouter from './components/history-route/history-router.tsx';
 import browserHistory from './browser-history.ts';
 import {isOffersLoaded} from './store/offers/offers.selectors.ts';
